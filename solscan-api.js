@@ -7,7 +7,12 @@ const port = process.env.PORT || 10000;
 async function getTimiCapitalAmount() {
   const browser = await puppeteer.launch({
     headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--single-process'
+    ]
   });
   const page = await browser.newPage();
   
@@ -65,6 +70,15 @@ function formatNumber(value) {
       return value.toFixed(2);
     }
 }
+
+const https = require('https');
+app.get('/test-external', (req, res) => {
+  https.get('https://solscan.io', (response) => {
+    res.send('Conexiune reușită la solscan.io');
+  }).on('error', (e) => {
+    res.status(500).send(`Eroare: ${e.message}`);
+  });
+});
 
 
 app.get('/test', (req, res) => {
