@@ -66,8 +66,13 @@ function formatNumber(value) {
     }
 }
 
+
+app.get('/test', (req, res) => {
+  res.json({ message: 'Test successful' });
+});
+
 const timiInitialBallance = 303395897.13;
-const usdInitialBallance = 45560715.65
+const usdInitialBallance = 45560715.65;
 
 app.get('/api/timi-capital', async (req, res) => {
   try {
